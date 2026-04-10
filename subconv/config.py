@@ -1,11 +1,14 @@
-from typing import List, Tuple
 from pathlib import Path
 import sys
+from typing import ClassVar
 
-from pydantic import BaseModel
-from pydantic_settings import BaseSettings, SettingsConfigDict, YamlConfigSettingsSource
-
-from . import config_template
+from pydantic import BaseModel, Field
+from pydantic_settings import (
+    BaseSettings,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+    YamlConfigSettingsSource,
+)
 
 
 class Group(BaseModel):
@@ -13,27 +16,29 @@ class Group(BaseModel):
     type: str
     rule: bool = True
     manual: bool = False
-    prior: str = None
-    regex: str = None
+    prior: str | None = None
+    regex: str | None = None
 
 
 class Config(BaseSettings):
-    HEAD: dict
+    HEAD: dict[str, object] = Field(default_factory=dict)
     TEST_URL: str = "http://www.gstatic.com/generate_204"
-    RULESET: List[Tuple[str, str]] = []
-    CUSTOM_PROXY_GROUP: List[Group] = []
+    RULESET: list[tuple[str, str]] = Field(default_factory=list)
+    CUSTOM_PROXY_GROUP: list[Group] = Field(default_factory=list)
 
-    model_config = SettingsConfigDict(yaml_file="config.yaml")
+    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
+        yaml_file="config.yaml"
+    )
 
     @classmethod
     def settings_customise_sources(
         cls,
-        settings_cls,
-        init_settings,
-        env_settings,
-        dotenv_settings,
-        file_secret_settings,
-    ):
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
         return (
             init_settings,
             env_settings,
