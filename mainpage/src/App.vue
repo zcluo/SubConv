@@ -18,6 +18,23 @@
                         placeholder="请粘贴订阅链接，或者分享链接，多个订阅链接请换行或用|符号隔开"></el-input>
                 </el-form-item>
 
+                <el-form-item label="模板">
+                    <el-select
+                        v-model="selectedTemplate"
+                        style="width: 200px"
+                        :disabled="!selectedTemplate"
+                        :loading="isLoadingRuntimeConfig"
+                        :placeholder="templatePlaceholder"
+                    >
+                        <el-option
+                            v-for="template in templateOptions"
+                            :key="template.value"
+                            :label="template.label"
+                            :value="template.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item label="代理规则集">
                     <el-switch v-model="proxy_switch" active-text="关闭后将直接从GitHub获取规则集而非通过本服务器代理"></el-switch>
                 </el-form-item>
@@ -68,27 +85,124 @@
 
 <script setup lang="ts">
 // init
-import { ref } from 'vue'
-import { ElButton, ElInput, ElForm, ElFormItem, ElCard, ElSwitch, ElMessage } from 'element-plus'
+import { computed, onMounted, ref } from 'vue'
+import { ElButton, ElInput, ElForm, ElFormItem, ElCard, ElSwitch, ElMessage, ElSelect, ElOption } from 'element-plus'
 import 'element-plus/es/components/button/style/css'
 import 'element-plus/es/components/input/style/css'
 import 'element-plus/es/components/form/style/css'
 import 'element-plus/es/components/form-item/style/css'
 import 'element-plus/es/components/card/style/css'
 import 'element-plus/es/components/switch/style/css'
+import 'element-plus/es/components/select/style/css'
+import 'element-plus/es/components/option/style/css'
 import 'element-plus/es/components/message/style/css'
 const linkInput = ref('')
 const linkOutput = ref('')
 const time = ref('')
 const standby = ref('')
+const defaultTemplate = ref<string | null>(null)
+const selectedTemplate = ref<string | null>(null)
+const availableTemplates = ref<string[]>([])
+const isLoadingRuntimeConfig = ref(true)
+const hasRuntimeConfigError = ref(false)
 const standby_switch = ref(false)
 const proxy_switch = ref(true)
+
+const templateOptions = computed(() => [
+    ...availableTemplates.value.map((templateName) => ({
+        value: templateName,
+        label: templateName
+    }))
+])
+
+const templatePlaceholder = computed(() => {
+    if (isLoadingRuntimeConfig.value) {
+        return '模板配置加载中...'
+    }
+    if (hasRuntimeConfigError.value) {
+        return '模板配置加载失败，请刷新网页后重试'
+    }
+    return '请选择模板'
+})
+
+const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
+
+const initializeTemplateSelection = async () => {
+    const maxAttempts = 3
+    const retryDelayMs = [500, 1500]
+
+    isLoadingRuntimeConfig.value = true
+    hasRuntimeConfigError.value = false
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        try {
+            const response = await fetch('/config')
+            if (!response.ok) {
+                throw new Error(`Failed to load runtime config: ${response.status}`)
+            }
+
+            const runtimeConfig = await response.json() as {
+                defaultTemplate?: string,
+                availableTemplates?: string[]
+            }
+
+            const runtimeTemplates = Array.isArray(runtimeConfig.availableTemplates)
+                ? runtimeConfig.availableTemplates
+                : []
+
+            if (runtimeTemplates.length === 0) {
+                throw new Error('Runtime config did not include any available templates.')
+            }
+
+            availableTemplates.value = runtimeTemplates
+            defaultTemplate.value = typeof runtimeConfig.defaultTemplate === 'string'
+                ? runtimeConfig.defaultTemplate
+                : null
+            selectedTemplate.value = runtimeTemplates.includes(defaultTemplate.value ?? '')
+                ? defaultTemplate.value
+                : runtimeTemplates[0]
+            isLoadingRuntimeConfig.value = false
+            return
+        }
+        catch (error) {
+            console.error(`Failed to initialize template selection from runtime config (attempt ${attempt}/${maxAttempts}).`, error)
+
+            if (attempt < maxAttempts) {
+                await sleep(retryDelayMs[attempt - 1])
+                continue
+            }
+
+            availableTemplates.value = []
+            defaultTemplate.value = null
+            selectedTemplate.value = null
+            hasRuntimeConfigError.value = true
+            isLoadingRuntimeConfig.value = false
+            ElMessage({
+                message: '模板配置加载失败，请刷新网页后重试',
+                type: 'error'
+            })
+        }
+    }
+}
+
+onMounted(async () => {
+    await initializeTemplateSelection()
+})
 
 // methods
 const submitForm = () => {
     let result = window.location.protocol + "//" + window.location.host
     if (linkInput.value !== "") {
+        if (!selectedTemplate.value) {
+            ElMessage({
+                message: '模板配置加载失败，请刷新网页后重试',
+                type: 'error'
+            });
+            linkOutput.value = ""
+            return false;
+        }
         result += "/sub?url=" + encodeURIComponent(linkInput.value);
+        result += "&template=" + encodeURIComponent(selectedTemplate.value);
         if (time.value !== "") {
             if (/^[1-9][0-9]*$/.test(time.value)) {
                 result += "&interval=" + time.value;
