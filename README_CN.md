@@ -28,6 +28,19 @@
 
 [docs](https://subconv.is-sb.com) (中英都有, 但是机翻)
 
+## 仓库结构
+
+- `subconv/`：FastAPI 后端与转换逻辑
+- `api.py`：供 CLI 和 Vercel 使用的薄入口
+- `mainpage/`：Vue/Vite 前端
+- `docs/`：VitePress 文档站点，通过 GitHub Pages 独立部署
+
+本地常用命令：
+
+- 后端：`uv sync` 后执行 `uv run python api.py`
+- 前端：`cd mainpage && bun install && bun run dev`
+- 文档：`cd docs && bun install && bun run dev`
+
 ## 说明
 
 **Clash Core from Dreamacro** (原版Clash) 已经不再支持了，建议使用 [mihomo](https://github.com/MetaCubeX/mihomo)

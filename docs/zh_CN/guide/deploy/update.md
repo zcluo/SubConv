@@ -5,6 +5,9 @@
 ![image](/assets/deploy/update.png)  
 之后，Vercel 将自动重新部署。
 
+## 如果你也部署了文档站点
+文档站点来自仓库里的 `docs/` 目录，并通过 GitHub Pages 独立部署。只要你把 `docs/**` 下的变更推送到默认分支，文档部署工作流就会自动发布最新站点。
+
 ## 如果使用 Docker 部署
 1. 假设你的服务器上的目录是 `~/subconv`。进入该目录。
 2. 使用 `docker compose down` 停止服务。
@@ -16,7 +19,7 @@
 
 ## 如果部署在你的 VPS 上（二进制文件）
 1. 停止 subconv 的进程。
-2. 从 [Releases](https://github.com/SubConv/SubConv/releases) 下载最新的二进制文件。删除原来的 `api` 文件和 `static` 文件夹，然后把新的文件解压进去。授予 `api` 文件可执行权限。
+2. 从 [Releases](https://github.com/SubConv/SubConv/releases) 下载最新的二进制文件。删除原来的 `api` 文件和旧的 `mainpage/dist` 目录，然后把新的文件解压进去。授予 `api` 文件可执行权限。
 3. 查看 Release 页面，看看有没有需要更新的配置项。若无，跳过 4~6 步。
 4. 备份 `config.yaml` 文件，然后删除原来的 `config.yaml` 文件。
 5. 运行 `./api -G default > config.yaml` 生成默认配置文件。

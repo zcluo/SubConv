@@ -29,6 +29,19 @@ We provide configurations for general users and ZJU version, you can check [docs
 
 [docs](https://subconv.is-sb.com) (both Chinese and English, but machine translated)
 
+## Repo Layout
+
+- `subconv/`: FastAPI backend and converter logic
+- `api.py`: thin entrypoint used by the CLI and Vercel
+- `mainpage/`: Vue/Vite frontend
+- `docs/`: VitePress documentation site, deployed separately via GitHub Pages
+
+Local commands:
+
+- Backend: `uv sync` then `uv run python api.py`
+- Frontend: `cd mainpage && bun install && bun run dev`
+- Docs: `cd docs && bun install && bun run dev`
+
 ## P.S
 
 **Clash Core from Dreamacro** (original Clash core) is no longer supported. It's recommended to use [mihomo](https://github.com/MetaCubeX/mihomo) instead.

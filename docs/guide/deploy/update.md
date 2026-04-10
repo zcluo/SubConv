@@ -3,7 +3,10 @@
 ## If deployed on Vercel
 When your forked repository is out of date, you can sync it with the original repository according to the picture below:  
 ![image](/assets/deploy/update.png)  
-After that, vercel will redeploy automatically.  
+After that, Vercel will redeploy automatically.
+
+## If you also host the documentation site
+The documentation site is built from the `docs/` directory and deployed separately through GitHub Pages. After you push changes under `docs/**` to the default branch, the docs deployment workflow will publish the updated site automatically.
 
 ## If deployed with Docker
 1. Assuming the directory on your server is `~/subconv`. Enter the directory.
@@ -16,7 +19,7 @@ After that, vercel will redeploy automatically.
 
 ## If deployed on your VPS (binary file)
 1. Stop the subconv process.
-2. Download the latest binary file from [Releases](https://github.como/SubConv/SubConv/releases). Delete the original `api` file and `static` folder, then unzip the new file into it. Grant the `api` file executable permission.
+2. Download the latest binary file from [Releases](https://github.com/SubConv/SubConv/releases). Delete the original `api` file and the old `mainpage/dist` directory, then extract the new files into place. Grant the `api` file executable permission.
 3. Check the Release page to see if there are any configuration items that need to be updated. If not, skip steps 4-6.
 4. Backup the `config.yaml` file, then delete the original `config.yaml` file.
 5. Run `./api -G default > config.yaml` to generate the default configuration file.

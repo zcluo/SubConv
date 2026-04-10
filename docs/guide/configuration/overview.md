@@ -1,6 +1,10 @@
 # Configuration
 
-The configuration of this program uses the YAML file format. The configuration file is `config.yaml`, located in the root directory of the program. An example can be found at [config.yaml](https://github.com/SubConv/SubConv/blob/main/config.yaml). You can also use `./api -G default > config.yaml` to generate the default configuration file. If you need to use ZJU's configuration file, you can use `./api -G zju > config.yaml` to generate ZJU's configuration file.
+The configuration of this program uses the YAML file format. The configuration file is `config.yaml`, located in the root directory of the program. An example can be found at [config.yaml](https://github.com/SubConv/SubConv/blob/main/config.yaml).
+
+If you are running from a source checkout, you can generate the default configuration file with `uv run python api.py -G default > config.yaml`. If you need the ZJU configuration file, use `uv run python api.py -G zju > config.yaml`.
+
+If you are running a released binary, you can use `./api -G default > config.yaml` or `./api -G zju > config.yaml` instead.
 
 ## Configuration Items
 

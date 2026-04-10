@@ -1,6 +1,10 @@
 # 配置
 
-本程序的配置使用 YAML 文件格式。配置文件的为 `config.yaml`，位于程序的根目录下。例子可参考 [config.yaml](https://github.com/SubConv/SubConv/blob/main/config.yaml)。也可用运行 `./api -G default > config.yaml` 来生成默认配置文件。如果需要使用 ZJU 的配置文件，可以使用 `./api -G zju > config.yaml` 生成 ZJU 的配置文件。
+本程序的配置使用 YAML 文件格式。配置文件为 `config.yaml`，位于程序的根目录下。例子可参考 [config.yaml](https://github.com/SubConv/SubConv/blob/main/config.yaml)。
+
+如果你是从源码运行，可以使用 `uv run python api.py -G default > config.yaml` 生成默认配置文件；如果需要使用 ZJU 的配置文件，可以使用 `uv run python api.py -G zju > config.yaml`。
+
+如果你使用的是发布版二进制文件，也可以继续使用 `./api -G default > config.yaml` 或 `./api -G zju > config.yaml`。
 
 ## 配置项
 

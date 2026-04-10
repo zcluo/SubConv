@@ -1,6 +1,6 @@
-# Getteing Started
+# Getting Started
 
-To get started with SubConv, you can either deploy it on Vercel or deploy it on your own VPS. If you want to try it out first, you can use the demo given in the README of the repo.   
+To get started with SubConv, you can deploy it on Vercel, with Docker, or on your own VPS. If you want to try it out first, you can use the demo linked from the repository README.
 
 ## Deploy
 - [Deploy on Vercel](/guide/deploy/vercel)
@@ -8,4 +8,4 @@ To get started with SubConv, you can either deploy it on Vercel or deploy it on 
 - [Deploy on VPS](/guide/deploy/vps)
 
 ## Usage
-Open the link where you deployed SubConv, and you will see the web UI. It will help you get the link of the new subscription.  
+Open the URL where you deployed SubConv and you will see the Web UI. It helps you generate a converted mihomo subscription URL.

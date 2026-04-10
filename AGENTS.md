@@ -24,6 +24,7 @@
 - For frontend-only changes, the CI-equivalent check is `cd mainpage && bun install && bun run build`.
 - For docs-only changes, the CI-equivalent check is `cd docs && bun install && bun run build`.
 - If you touch packaging/build flow, also read the matching workflow under `.github/workflows/` and keep local verification aligned with it.
+- After backend, frontend, config, CLI, deployment, or other user-facing changes, review `docs/` and `README*.md` to see whether documentation needs updating; when behavior or examples changed, update the docs in the same change.
 
 ## Architecture boundaries
 

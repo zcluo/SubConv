@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: SubConv
-  text: 又一个 Clash 订阅转换器
-  tagline: 易于部署的 Clash 订阅转换器
+  text: 又一个 mihomo 订阅转换器
+  tagline: 易于部署的 mihomo 订阅转换器
   image:
     src: /logo.jpg
     alt: SubConv Logo
@@ -31,7 +31,7 @@ features:
   - title: 支持多个机场
     details: 它支持多个机场
   - title: 支持多种协议
-    details: 它支持多种协议，包括 SS、SSR、Vmess、Vless、Trojan、Hysteria。还支持 base64 格式的订阅
+    details: 它支持多种协议，包括 SS、SSR、VMess、VLESS、Trojan 和 Hysteria。也支持 base64 格式的订阅
   - title: 支持显示剩余流量
     details: 单订阅时支持显示剩余流量和用户信息
 ---

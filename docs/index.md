@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: SubConv
-  text: Yet Another Subscription Converter for Clash
-  tagline: Easy-to-Deploy Clash Subscription Converter
+  text: Yet Another Subscription Converter for mihomo
+  tagline: Easy-to-deploy mihomo subscription converter
   image:
     src: /logo.jpg
     alt: SubConv Logo
@@ -31,8 +31,7 @@ features:
   - title: Support Multiple Airports
     details: It supports multiple airports
   - title: Support Multiple Protocols
-    details: It supports multiple protocols, including SS, SSR, Vmess, Vless, Trojan, Hysteria. Subscription in base64 format is also supported
+    details: It supports multiple protocols, including SS, SSR, VMess, VLESS, Trojan, and Hysteria. Base64 subscriptions are also supported
   - title: Support Display Remaining Traffic
     details: Support displaying remaining traffic and user information when there is only one subscription
 ---
-
