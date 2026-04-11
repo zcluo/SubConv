@@ -7,7 +7,7 @@
 3. `chmod +x api` 来给予执行权限
 4. 如果需要机器专用运行时配置，请把改动写进 `config.yaml`，然后按需修改 `template/zju.yaml` 或 `template/general.yaml`。服务使用 `DEFAULT_TEMPLATE` 指定的模板，默认值为 `zju`。`HOST` 和 `PORT` 也来自 `config.yaml`。详细模板项可参考 [配置](../configuration/overview)
 5. 运行程序。
-    > ***注意***：如果你不是使用特权用户，通常你是不能绑定 1024 以下的端口的。推荐直接在 `config.yaml` 中使用高端口，或者你也可以使用 `setcap` 来给 python 绑定低端口的权限。
+    > ***注意***：如果你不是使用特权用户，通常你是不能绑定 1024 以下的端口的。推荐直接在 `config.yaml` 中使用高端口，或者你也可以使用 `setcap` 来给 `api` 可执行文件绑定低端口的权限。
 6. 使用反向代理（可选）
 
 ## 尽情享受吧

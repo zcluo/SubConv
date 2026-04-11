@@ -17,5 +17,5 @@ First make sure you have installed Docker and Docker Compose.
 
 4. Review the bundled `docker-compose.yml` if you want to change the published port or the mounted config/template paths. By default it mounts `./config.yaml:/app/config.yaml` and `./template:/app/template`, so `config.yaml` must exist before you run `docker compose up`.
 
-5. Run `docker compose up -d --build` to start the service.
+5. Run `docker compose up -d` to start the service.
 6. Enjoy

@@ -17,5 +17,5 @@
 
 4. 如果你想修改对外端口或配置/模板挂载路径，可以查看仓库自带的 `docker-compose.yml`。默认会挂载 `./config.yaml:/app/config.yaml` 和 `./template:/app/template`，所以在运行 `docker compose up` 之前必须先准备好 `config.yaml`。
 
-5. 运行 `docker compose up -d --build` 来启动服务。
+5. 运行 `docker compose up -d` 来启动服务。
 6. 尽情享受吧
