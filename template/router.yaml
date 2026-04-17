@@ -263,6 +263,6 @@ CUSTOM_PROXY_GROUP:
   type: select
   manual: true
   rule: true
-  prior: DIRECT
+  prior: PROXY
 
 
