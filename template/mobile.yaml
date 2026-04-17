@@ -27,10 +27,10 @@ HEAD:
   geo-update-interval: 2
   profile:
     store-selected: true
-    store-fake-ip: true
+    store-fake-ip: false
   sniffer:
     enable: true
-    parse-pure-ip: true
+    parse-pure-ip: false
     override-destination: true
     force-dns-mapping: true
     skip-domain:

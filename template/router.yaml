@@ -26,10 +26,10 @@ HEAD:
   geo-update-interval: 24
   profile:
     store-selected: true
-    store-fake-ip: true
+    store-fake-ip: false
   sniffer:
     enable: true
-    parse-pure-ip: true
+    parse-pure-ip: false
     override-destination: true
     sniff:
       {
@@ -57,15 +57,10 @@ HEAD:
     enhanced-mode: redir-host
     fake-ip-filter-mode: rule
     fake-ip-filter:
-      [
-        rule-set,fakeip-filter,real-ip,
-        geosite,fakeip-filter,real-ip,
-        GEOSITE,geolocation-!cn,fake-ip,
-        DOMAIN-SUFFIX,emex.top,real-ip,
-        GEOSITE,cn,real-ip,
-        MATCH,real-ip
-
-      ]
+      - GEOSITE,geolocation-!cn,fake-ip
+      - DOMAIN-SUFFIX,emex.top,real-ip
+      - GEOSITE,cn,real-ip
+      - MATCH,real-ip
     respect-rules: false
     default-nameserver:
       - 114.114.114.114
