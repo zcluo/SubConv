@@ -79,9 +79,6 @@ HEAD:
     fallback-filter:
       geoip: true
       geoip-code: CN
-      geosite:
-        - gfw
-        - geolocation-!cn
       ipcidr:
         - 240.0.0.0/4
     fake-ip-range6: fdfe:dcba:9876::1/64
