@@ -1,0 +1,6 @@
+# Copy this file to config.yaml and adjust the values if needed.
+
+HOST: 0.0.0.0
+PORT: 8080
+DEFAULT_TEMPLATE: zju
+DISALLOW_ROBOTS: true
