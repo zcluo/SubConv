@@ -13,8 +13,6 @@ HEAD:
     private-key: cert.key
   external-ui: ui
   external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip
-  find-process-mode: strict
-  global-client-fingerprint: chrome
   mixed-port: 2334
   socks-port: 2336
   port: 2335
