@@ -1,0 +1,275 @@
+HEAD:
+  mode: rule
+  log-level: error
+  ipv6: true
+  allow-lan: true
+  unified-delay: false
+  tcp-concurrent: true
+  external-controller: "[::]:29090"
+  external-controller-tls: "[::]:9090"
+  secret: ""
+  tls:
+    certificate: cert.pem
+    private-key: cert.key
+  external-ui: ui
+  external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip
+  find-process-mode: strict
+  global-client-fingerprint: chrome
+  mixed-port: 2334
+  socks-port: 2336
+  port: 2335
+  authentication:
+    - mix:1234567890
+  geox-url:
+    geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+    mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
+  geo-auto-update: true
+  geo-update-interval: 24
+  profile:
+    store-selected: true
+    store-fake-ip: true
+  sniffer:
+    enable: true
+    parse-pure-ip: true
+    override-destination: true
+    sniff:
+      {
+        HTTP: { ports: [80, 8080-8880], override-destination: true },
+        TLS: { ports: [443, 8443], override-destination: true },
+        QUIC: { ports: [443, 8443], override-destination: true },
+      }
+    skip-domain: [Mijia Cloud, emex.top, +.emex.top]
+  tun:
+    enable: true
+    stack: system
+    dns-hijack: [any:53]
+    auto-route: true
+    auto-detect-interface: true
+    device: mihomo
+    strict-route: true
+  dns:
+    enable: true
+    prefer-h3: true
+    ipv6: true
+    ipv6-timeout: 400
+    cache-algorithm: arc
+    listen: 0.0.0.0:1053
+    fake-ip-range: 198.18.0.1/16
+    enhanced-mode: redir-host
+    fake-ip-filter-mode: rule
+    fake-ip-filter:
+      [
+        rule-set,fakeip-filter,real-ip,
+        geosite,fakeip-filter,real-ip,
+        GEOSITE,geolocation-!cn,fake-ip,
+        DOMAIN-SUFFIX,emex.top,real-ip,
+        GEOSITE,cn,real-ip,
+        MATCH,real-ip
+
+      ]
+    respect-rules: false
+    default-nameserver:
+      - 114.114.114.114
+      - 8.8.8.8
+      - tls://1.12.12.12:853
+      - tls://223.5.5.5:853
+      - system
+    nameserver:
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+      - https://1.1.1.1/dns-query
+      - https://8.8.4.4/dns-query
+    fallback:
+      - tls://1.1.1.1:853
+      - tls://8.8.8.8:853
+    proxy-server-nameserver:
+      - https://dns.google/dns-query
+      - tls://one.one.one.one
+    fallback-filter:
+      geoip: true
+      geoip-code: CN
+      ipcidr:
+        - 240.0.0.0/4
+    nameserver-policy:
+      geosite:cn,private,apple:
+        - https://doh.pub/dns-query
+        - https://dns.alidns.com/dns-query
+      geosite:category-ads-all: rcode://success
+      geosite:geolocation-!cn:
+        - https://1.1.1.1/dns-query
+        - https://8.8.8.8/dns-query
+TEST_URL: https://www.gstatic.com/generate_204
+RULESET:
+- - 📝 Compiler
+  - https://raw.githubusercontent.com/zcluo/fkgfwrule/refs/heads/main/clash/compilesrcip.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/zcluo/fkgfwrule/refs/heads/main/clash/homedomain.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/zcluo/fkgfwrule/refs/heads/main/clash/commonport.list
+- - 🛑 全球拦截
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/private.list
+- - Ⓜ️ Microsoft
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft@cn.list
+- - 🍎 Apple
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple@cn.list
+- - 🔎 Google
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google@cn.list
+- - 🎞️ YouTube
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.list
+- - 🤖 OpenAi
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-!cn.list
+- - 🤖 OpenAi
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ai.list
+- - 📺 Netflix
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.list
+- - 📺 Netflix
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.list
+- - ㊙️ Porn
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-porn.list
+- - 🤖 OpenAi
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bing.list
+- - 🦜 Twitter
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.list
+- - 🦜 Twitter
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.list
+- - 🔎 Google
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.list
+- - 🔎 Google
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.list
+- - 📖 Facebook
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/facebook.list
+- - 📖 Facebook
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.list
+- - 🎥 TikTok
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok@!cn.list
+- - 💻 Github
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.list
+- - 🚀 节点选择
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gfw.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list
+- - 📲 Telegram
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.list
+- - 📲 Telegram
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.list
+- - 🚀 节点选择
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-!cn.list
+- - 🎯 全球直连
+  - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/geolocation-cn.list
+- - 🎯 全球直连
+  - '[]GEOIP,CN'
+- - 🐟 漏网之鱼
+  - '[]FINAL'
+CUSTOM_PROXY_GROUP:
+- name: ♻️ 自动选择
+  type: url-test
+  rule: false
+- name: 🚀 手动切换1
+  type: select
+  manual: true
+  rule: false
+- name: 🚀 手动切换2
+  type: select
+  manual: true
+  rule: false
+- name: 🚀 手动切换3
+  type: select
+  manual: true
+  rule: false
+- name: 🚀 手动切换4
+  type: select
+  manual: true
+  rule: false
+- name: 🔯 故障转移
+  type: fallback
+  manual: true
+  rule: false
+- name: 🔮 负载均衡
+  type: load-balance
+  manual: true
+  rule: false
+- name: ㊙️ Porn
+  type: select
+  manual: true
+  rule: true
+  prior: REJECT
+- name: Ⓜ️ Microsoft
+  type: select
+  manual: true
+  rule: true
+  prior: DIRECT
+- name: 🍎 Apple
+  type: select
+  manual: true
+  rule: true
+  prior: DIRECT
+- name: 🎞️ YouTube
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 📝 Compiler
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 💻 Github
+  type: select
+  manual: false
+  rule: true
+  prior: PROXY
+- name: 🔎 Google
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 📖 Facebook
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 🎥 TikTok
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 🤖 OpenAi
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 📺 Netflix
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 🦜 Twitter
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 📲 Telegram
+  type: select
+  manual: true
+  rule: true
+  prior: PROXY
+- name: 🎯 全球直连
+  type: select
+  prior: DIRECT
+- name: 🛑 全球拦截
+  type: select
+  prior: REJECT
+- name: 🐟 漏网之鱼
+  type: select
+  manual: true
+  rule: true
+  prior: DIRECT
+
+
